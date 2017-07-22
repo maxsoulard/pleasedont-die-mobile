@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { StyleSheet, ActivityIndicator, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 export default class Sensor extends React.Component {
     constructor(props) {
@@ -13,16 +13,36 @@ export default class Sensor extends React.Component {
 
     render () {
         return (
-            <View>
-                <Text>Plante</Text>
-                <Text>Valeur brute : {this.props.sensor.moisture}</Text>
-            </View>
+            <Image
+                style={styles.plant}
+                source={require('../assets/plant.png')}>
+                <View style={styles.container}>
+                    <Text style={styles.title}>PLANTE</Text>
+                    <Text style={styles.data}>Valeur brute : {this.props.sensor.moisture}</Text>
+                </View>
+            </Image>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    sensorslist: {
-        marginTop: 100
+    title: {
+        color: 'white',
+        fontSize: 28,
+    },
+    data: {
+        color: 'white',
+    },
+    container: {
+        flex: 1, 
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        padding: 40,
+    },
+    plant: {
+        flex: 1,
+        resizeMode: 'cover', // or 'stretch'
+        width: null,
+        height: null,
+        opacity: 50,
     }
 });

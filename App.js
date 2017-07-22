@@ -6,42 +6,33 @@
 // React
 import React from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
-import { TabNavigator } from 'react-navigation';
-import {StatusBar} from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import {StatusBar, Platform} from 'react-native';
 
 // Components
 import HomeScreen from './components/HomeScreen';
+import SensorScreen from './components/SensorScreen';
 
-const Tabs = TabNavigator({
+const Router = StackNavigator({
         Home: {screen: HomeScreen},
-    },
-    {
-        tabBarOptions: { 
-            style: { backgroundColor: 'orange', marginTop: StatusBar.currentHeight },
+        SensorScreen: {screen: SensorScreen}
+    }, {
+        cardStyle: {
+            paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
         }
+    }, 
+    {
+        initialRouteName: 'HomeScreen',
     });
 
 export default class App extends React.Component {
     static navigationOptions = {
         title: 'PleaseDont-die',
-        header: {
-            tintColor: 'deeppink',
-        }
     };
 
     render() {
         return (
-            <Tabs />
+            <Router style={{marginTop: StatusBar.height}} />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    maincontainer: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: 'skyblue',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});

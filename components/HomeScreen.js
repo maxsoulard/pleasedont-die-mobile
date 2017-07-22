@@ -41,7 +41,10 @@ export default class HomeScreen extends React.Component {
                 <View style={styles.maincontainer}>
                     <ListView
                         dataSource={ds.cloneWithRows(this.state.sensors)}
-                        renderRow={(rowData) => <View style={styles.item}><Sensor sensor={rowData}/></View>}
+                        renderRow={(rowData) => 
+                            <View style={styles.item}>
+                                <Sensor sensor={rowData} navigation={this.props.navigation}/>
+                            </View>}
                     />
                 </View>
             );

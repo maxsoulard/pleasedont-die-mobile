@@ -16,7 +16,7 @@ export default class Sensor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sensor: {}
+            data: {}
         };
 
         this.getSensorData();
@@ -25,7 +25,8 @@ export default class Sensor extends React.Component {
     getSensorData() {
         axios.get('http://192.168.0.17:8888/sensors/'+ this.props.sensor._id +'/data')
             .then((response) => {
-                this.setState({sensor: response.data});
+                response.data.id = this.props.sensor._id;
+                this.setState({data: response.data});
             });
     }
 
@@ -33,12 +34,12 @@ export default class Sensor extends React.Component {
         switch(this.props.sensor.type) {
             case 'temperature':
                 return (
-                    <TemperatureSensor sensor={this.state.sensor}/>
+                    <TemperatureSensor sensor={this.props.sensor} data={this.state.data} navigation={this.props.navigation}/>
                 );
                 break;
             case 'plant':
                 return (
-                    <PlantSensor sensor={this.state.sensor}/>
+                    <PlantSensor sensor={this.props.sensor} data={this.state.data} navigation={this.props.navigation}/>
                 );
                 break;
             default:

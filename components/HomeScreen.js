@@ -39,7 +39,6 @@ export default class HomeScreen extends React.Component {
             const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             return (
                 <View style={styles.maincontainer}>
-                    <View style={styles.separator}></View>
                     <ListView
                         dataSource={ds.cloneWithRows(this.state.sensors)}
                         renderRow={(rowData) => <View style={styles.item}><Sensor sensor={rowData}/></View>}
@@ -66,8 +65,5 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
-    },
-    separator: {
-        paddingTop: 10
     }
 });

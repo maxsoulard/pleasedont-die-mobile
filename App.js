@@ -7,7 +7,7 @@
 import React from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import {StatusBar} from 'react-native';
+import {StatusBar, Platform} from 'react-native';
 
 // Components
 import HomeScreen from './components/HomeScreen';
@@ -15,8 +15,8 @@ import HomeScreen from './components/HomeScreen';
 const Router = StackNavigator({
         Home: {screen: HomeScreen},
     }, {
-        navigationOptions: {
-            headerStyle: {backgroundColor: 'yellow', elevation: null, paddingTop: StatusBar.height},
+        cardStyle: {
+            paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
         }
     });
 

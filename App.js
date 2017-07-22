@@ -6,42 +6,28 @@
 // React
 import React from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
-import { TabNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 import {StatusBar} from 'react-native';
 
 // Components
 import HomeScreen from './components/HomeScreen';
 
-const Tabs = TabNavigator({
+const Router = StackNavigator({
         Home: {screen: HomeScreen},
-    },
-    {
-        tabBarOptions: { 
-            style: { backgroundColor: 'orange', marginTop: StatusBar.currentHeight },
+    }, {
+        navigationOptions: {
+            headerStyle: {backgroundColor: 'yellow', elevation: null, paddingTop: StatusBar.height},
         }
     });
 
 export default class App extends React.Component {
     static navigationOptions = {
         title: 'PleaseDont-die',
-        header: {
-            tintColor: 'deeppink',
-        }
     };
 
     render() {
         return (
-            <Tabs />
+            <Router style={{marginTop: StatusBar.height}} />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    maincontainer: {
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: 'skyblue',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});

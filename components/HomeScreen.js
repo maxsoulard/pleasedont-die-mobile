@@ -39,9 +39,7 @@ export default class HomeScreen extends React.Component {
             const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             return (
                 <View style={styles.maincontainer}>
-                    <View style={styles.status}>
-                        <Text style={{fontSize: 15, color: 'grey'}}>Connected to server</Text>
-                    </View>
+                    <View style={styles.separator}></View>
                     <ListView
                         dataSource={ds.cloneWithRows(this.state.sensors)}
                         renderRow={(rowData) => <View style={styles.item}><Sensor sensor={rowData}/></View>}
@@ -61,14 +59,15 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
     maincontainer: {
-        flex: 6
-    },
-    status: {
-        padding: 10,
+        flex: 6,
+        backgroundColor: '#e6e6e6',
     },
     item: {
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
+    },
+    separator: {
+        paddingTop: 10
     }
 });

@@ -1,6 +1,14 @@
+/**
+ * Sensor
+ * @flow
+ */
+
+// React
 import React from 'react';
 import axios from 'axios';
 import { StyleSheet, ActivityIndicator, Text, View } from 'react-native';
+
+// Components
 import TemperatureSensor from './TemperatureSensor';
 import PlantSensor from './PlantSensor';
 
@@ -35,16 +43,8 @@ export default class Sensor extends React.Component {
                 break;
             default:
                 return (
-                    <View>
-                        <ActivityIndicator color='blue' animating={true}/>
-                    </View>
+                    <ActivityIndicator color='blue' animating={true}/>
                 );
         }
     }
 }
-
-const styles = StyleSheet.create({
-    sensorslist: {
-        marginTop: 100
-    }
-});

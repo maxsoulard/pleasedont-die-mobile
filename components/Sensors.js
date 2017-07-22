@@ -25,12 +25,12 @@ export default class Sensors extends React.Component {
         if (this.state.sensors !== null) {
             const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
             return (
-                <View>
+                <View style={styles.container}>
                     <Text>Capteurs</Text>
                     <ListView
-                        style={styles.sensorslist}
+                        contentContainerStyle={styles.list}
                         dataSource={ds.cloneWithRows(this.state.sensors)}
-                        renderRow={(rowData) => <Sensor sensor={rowData}/>}
+                        renderRow={(rowData) => <View style={styles.item}><Sensor sensor={rowData}/></View>}
                     />
                 </View>
             );
@@ -46,7 +46,16 @@ export default class Sensors extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    sensorslist: {
-        marginTop: 100
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    list: {
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+    },
+    item: {
+        backgroundColor: 'red',
+        marginTop: 20,
     }
 });

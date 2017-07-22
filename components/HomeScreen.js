@@ -1,27 +1,17 @@
 /**
- * App
+ * HomeScreen
  * @flow
  */
 
 // React
 import React from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
-import { TabNavigator } from 'react-navigation';
-import {StatusBar} from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
 // Components
-import HomeScreen from './components/HomeScreen';
+import Sensors from './Sensors';
 
-const Tabs = TabNavigator({
-        Home: {screen: HomeScreen},
-    },
-    {
-        tabBarOptions: { 
-            style: { backgroundColor: 'orange', marginTop: StatusBar.currentHeight },
-        }
-    });
-
-export default class App extends React.Component {
+export default class HomeScreen extends React.Component {
     static navigationOptions = {
         title: 'PleaseDont-die',
         header: {
@@ -31,7 +21,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Tabs />
+              <Sensors />
         );
     }
 }

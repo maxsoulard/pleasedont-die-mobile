@@ -15,9 +15,3 @@ export default class Sensor extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    sensorslist: {
-        marginTop: 100
-    }
-});

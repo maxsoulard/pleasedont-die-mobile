@@ -8,6 +8,7 @@ import React from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import {StatusBar, Platform} from 'react-native';
+import SensorScreen from './components/SensorScreen';
 
 // Components
 import HomeScreen from './components/HomeScreen';
@@ -16,9 +17,9 @@ import SensorScreen from './components/SensorScreen';
 const Router = StackNavigator({
         Home: {screen: HomeScreen},
         SensorScreen: {screen: SensorScreen}
-    }, {
-        cardStyle: {
-            paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+    }, { 
+        navigationOptions: {
+            headerStyle: {backgroundColor: 'yellow', elevation: null, paddingTop: StatusBar.height},
         }
     }, 
     {

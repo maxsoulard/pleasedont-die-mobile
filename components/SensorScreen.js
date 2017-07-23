@@ -1,6 +1,10 @@
+// Libs
+import _ from 'lodash';
+
 // React
 import React from 'react';
-import { StyleSheet, View, Text, ListView, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, Text, ListView, TouchableHighlight, Button } from 'react-native';
+import CheckBox from 'react-native-check-box'
 
 export default class SensorScreen extends React.Component {
     static navigationOptions = {
@@ -9,15 +13,46 @@ export default class SensorScreen extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            sensor: props.navigation.state.params.sensor,
+            subscribers: props.navigation.state.params.sensor.subscribers,
+            selectedSubscribers: []
+        };
+        _.each(this.state.subscribers, function(subscriber) {
+            subscriber.checked = false;
+        });
     }
 
     _addNewSubscriber() {
-        console.log("TODO POST to /sensors/id/subscribers");
+        console.log("TODO POST /sensors/id/subscribers");
+    }
+
+    _deleteSubscribers() {
+        console.log("TODO DELETE /sensors/id/subscribers/mail " + this.state.selectedSubscribers.length);
+        let notDeletedSubscribers = _.difference(this.state.subscribers, this.state.selectedSubscribers);
+        this.setState({subscribers: notDeletedSubscribers});
+        this.setState({selectedSubscribers: []});
+    }
+
+    _selectSubscriber(subscriber) {
+        let selectedSubscribers = this.state.selectedSubscribers;
+        if (!subscriber.checked) {            
+            selectedSubscribers.push(subscriber);
+            subscriber.checked = true;
+        }
+        else {
+            console.log(subscriber.checked);
+            selectedSubscribers = _.without(selectedSubscribers, subscriber);
+            subscriber.checked = false;
+        }
+        this.setState({selectedSubscribers: selectedSubscribers});
     }
 
     render() {
-        const sensor = this.props.navigation.state.params.sensor;
+        const sensor = this.state.sensor;
+        const subscribers = this.state.subscribers;
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
         return (
             <View style={styles.container}>
                 <View style={styles.informationsContainer}>
@@ -29,28 +64,47 @@ export default class SensorScreen extends React.Component {
                 </View>
                 <View style={styles.subscribersList}>
                     <ListView
-                        dataSource={ds.cloneWithRows(sensor.subscribers)}
+                        dataSource={ds.cloneWithRows(subscribers)}
                         renderRow={(rowData) => 
-                            <Subscriber subscriber={rowData} />}
+                            <View style={styles.subscriberItem}>
+                                <CheckBox
+                                    onClick={()=>this._selectSubscriber(rowData)}
+                                    isChecked={rowData.checked}
+                                    style={{paddingRight: 20}}
+                                />
+                                <Text>{rowData.mail}</Text>
+                            </View>}
                     />
                 </View>
-                <View style={styles.touchableContainer}>
-                    <TouchableHighlight 
-                        underlayColor={'#f0f0f0'}
-                        style={styles.touchableAddMail} 
-                        onPress={this._addNewSubscriber.bind(this)}>
-                        <Text style={styles.buttonAddMail}>+ Ajouter une adresse mail</Text>
-                    </TouchableHighlight>
-                </View>
+                <SubscribersActionButtons 
+                    onAddNewSubscriber={this._addNewSubscriber.bind(this)}
+                    onDeleteSubscribers={this._deleteSubscribers.bind(this)}
+                    state={this.state}
+                />
             </View>
         );
     }
 }
 
-const Subscriber = ({subscriber}) => {
+const SubscribersActionButtons = ({onAddNewSubscriber, onDeleteSubscribers, state}) => {
     return (
-        <View style={styles.subscriberItem}>
-            <Text>{subscriber.mail}</Text>
+        <View style={styles.buttonContainer}>
+            {state.selectedSubscribers.length > 0 &&
+                <Button
+                    onPress={onDeleteSubscribers}
+                    title="Supprimer"
+                    color="#cf0000"
+                    accessibilityLabel="Supprimer une adresse mail"
+                />
+            }
+            <View style={{paddingTop: 20}}>
+                <Button
+                    onPress={onAddNewSubscriber}
+                    title="Ajouter une adresse mail"
+                    color="#e0bc00"
+                    accessibilityLabel="Ajouter une adresse mail"
+                />
+            </View>
         </View>
     )
 }
@@ -72,24 +126,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     subscriberItem: {
+        flexDirection: "row",
         borderBottomWidth: 0.3,
         borderColor: '#efefef',
         paddingTop: 20,
         paddingBottom: 20,
-        paddingLeft: 40,
+        paddingLeft: 20,
     },
-    touchableContainer: {
+    buttonContainer: {
         margin: 20,
         flex: 1,
-    },
-    buttonAddMail: {
-    },
-    touchableAddMail: {
-        borderWidth: 0.3,
-        borderColor: '#efefef',
-        backgroundColor: '#dcdc00',
-        padding: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
     },
 });

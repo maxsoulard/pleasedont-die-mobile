@@ -1,5 +1,6 @@
 // Libs
 import _ from 'lodash';
+import axios from 'axios';
 
 // React
 import React from 'react';
@@ -15,12 +16,21 @@ export default class SensorScreen extends React.Component {
         super(props);
         this.state = {
             sensor: props.navigation.state.params.sensor,
-            subscribers: props.navigation.state.params.sensor.subscribers,
+            subscribers: [],
             selectedSubscribers: []
         };
-        _.each(this.state.subscribers, function(subscriber) {
+        _.each(this.state.subscribers, (subscriber) => {
             subscriber.checked = false;
         });
+        this._getSensor();
+    }
+
+    _getSensor() {
+        const getUrl = 'http://192.168.0.17:8888/api/sensors/' + this.state.sensor._id;
+        axios.get(getUrl)
+            .then((response) => {
+                this.setState({subscribers: response.data.subscribers});
+            });
     }
 
     _addNewSubscriber() {
@@ -28,10 +38,11 @@ export default class SensorScreen extends React.Component {
     }
 
     _deleteSubscribers() {
-        console.log("TODO DELETE /sensors/id/subscribers/mail " + this.state.selectedSubscribers.length);
-        let notDeletedSubscribers = _.difference(this.state.subscribers, this.state.selectedSubscribers);
-        this.setState({subscribers: notDeletedSubscribers});
-        this.setState({selectedSubscribers: []});
+        _.each(this.state.selectedSubscribers, (subscriberToDelete) => {
+            const deleteUrl = 'http://192.168.0.17:8888/api/sensors/' + this.state.sensor._id + '/subscribers/' + subscriberToDelete.mail;
+            axios.delete(deleteUrl)
+                .then(this._getSensor.bind(this));
+        });
     }
 
     _selectSubscriber(subscriber) {

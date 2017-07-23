@@ -14,15 +14,12 @@ import HomeScreen from './components/HomeScreen';
 import SensorScreen from './components/SensorScreen';
 
 const Router = StackNavigator({
-        Home: {screen: HomeScreen},
-        SensorScreen: {screen: SensorScreen}
-    }, {
-        cardStyle: {
-            paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-        }
-    }, 
-    {
-        initialRouteName: 'HomeScreen',
+        Home: {screen: HomeScreen}, 
+        SensorScreen: {screen: SensorScreen},
+    }, {  
+        navigationOptions: { 
+            headerStyle: {backgroundColor: '#dcdc00', elevation: null, paddingTop: StatusBar.height}, 
+        } 
     });
 
 export default class App extends React.Component {

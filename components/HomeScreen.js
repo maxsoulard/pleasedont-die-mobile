@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
     }
 
     getSensors() {
-        axios.get('http://192.168.0.17:8888/sensors')
+        axios.get('http://192.168.0.17:8888/api/sensors')
             .then((response) => {
                 this.setState({sensors: response.data});
             });

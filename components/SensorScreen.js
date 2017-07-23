@@ -19,9 +19,7 @@ export default class SensorScreen extends React.Component {
             subscribers: [],
             selectedSubscribers: []
         };
-        _.each(this.state.subscribers, (subscriber) => {
-            subscriber.checked = false;
-        });
+        
         this._getSensor();
     }
 
@@ -29,8 +27,12 @@ export default class SensorScreen extends React.Component {
         const getUrl = 'http://192.168.0.17:8888/api/sensors/' + this.state.sensor._id;
         axios.get(getUrl)
             .then((response) => {
+                _.each(this.state.subscribers, (subscriber) => {
+                    subscriber.checked = false;
+                });
                 this.setState({subscribers: response.data.subscribers});
-            });
+            })
+            .then(() => this.setState({selectedSubscribers: []}));
     }
 
     _addNewSubscriber() {
@@ -47,12 +49,11 @@ export default class SensorScreen extends React.Component {
 
     _selectSubscriber(subscriber) {
         let selectedSubscribers = this.state.selectedSubscribers;
-        if (!subscriber.checked) {            
+        if (!subscriber.checked) { // not already checked
             selectedSubscribers.push(subscriber);
             subscriber.checked = true;
         }
         else {
-            console.log(subscriber.checked);
             selectedSubscribers = _.without(selectedSubscribers, subscriber);
             subscriber.checked = false;
         }

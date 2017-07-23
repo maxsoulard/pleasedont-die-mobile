@@ -1,6 +1,6 @@
 // React
 import React from 'react';
-import { StyleSheet, View, Text, ListView } from 'react-native';
+import { StyleSheet, View, Text, ListView, TouchableHighlight } from 'react-native';
 
 export default class SensorScreen extends React.Component {
     static navigationOptions = {
@@ -9,6 +9,10 @@ export default class SensorScreen extends React.Component {
 
     constructor(props) {
         super(props);
+    }
+
+    _addNewSubscriber() {
+        console.log("TODO POST to /sensors/id/subscribers");
     }
 
     render() {
@@ -30,8 +34,13 @@ export default class SensorScreen extends React.Component {
                             <Subscriber subscriber={rowData} />}
                     />
                 </View>
-                <View style={styles.addContainer}>
-                    <Text style={styles.touchableAddMail}>+ Ajouter une adresse mail</Text>
+                <View style={styles.touchableContainer}>
+                    <TouchableHighlight 
+                        underlayColor={'#f0f0f0'}
+                        style={styles.touchableAddMail} 
+                        onPress={this._addNewSubscriber.bind(this)}>
+                        <Text style={styles.buttonAddMail}>+ Ajouter une adresse mail</Text>
+                    </TouchableHighlight>
                 </View>
             </View>
         );
@@ -69,12 +78,17 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingLeft: 40,
     },
-    touchableAddMail: {
-        color: 'grey',
-        paddingBottom: 100
+    touchableContainer: {
+        margin: 20,
+        flex: 1,
     },
-    addContainer: {
-        paddingTop: 20,
+    buttonAddMail: {
+    },
+    touchableAddMail: {
+        borderWidth: 0.3,
+        borderColor: '#efefef',
+        backgroundColor: '#dcdc00',
+        padding: 20,
         alignItems: 'center',
         justifyContent: 'center'
     },

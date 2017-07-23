@@ -18,7 +18,7 @@ const Router = StackNavigator({
         SensorScreen: {screen: SensorScreen},
     }, {  
         navigationOptions: { 
-            headerStyle: {backgroundColor: '#dcdc00', elevation: null, paddingTop: StatusBar.height}, 
+            headerStyle: {backgroundColor: '#e0bc00', elevation: null}, 
         } 
     });
 

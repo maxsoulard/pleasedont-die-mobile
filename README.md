@@ -10,7 +10,7 @@ npm run android
 ## Release APK
 ```
 npm run eject
-cd android/app
+cd android
 gradlew assembleRelease
 ```
 ## 

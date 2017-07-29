@@ -12,10 +12,12 @@ import {StatusBar, Platform} from 'react-native';
 // Components
 import HomeScreen from './components/HomeScreen';
 import SensorScreen from './components/SensorScreen';
+import NewSubscriberScreen from './components/NewSubscriberScreen';
 
 const Router = StackNavigator({
         Home: {screen: HomeScreen}, 
         SensorScreen: {screen: SensorScreen},
+        NewSubscriberScreen: {screen: NewSubscriberScreen},
     }, {  
         navigationOptions: { 
             headerStyle: {backgroundColor: '#e0bc00', elevation: null}, 

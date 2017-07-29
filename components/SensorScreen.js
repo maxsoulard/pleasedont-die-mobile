@@ -19,9 +19,11 @@ export default class SensorScreen extends React.Component {
             subscribers: [],
             selectedSubscribers: []
         };
-        
-        this._getSensor();
     }
+
+    componentDidMount() {
+        this._getSensor();
+    } 
 
     _getSensor() {
         const getUrl = 'http://192.168.0.17:8888/api/sensors/' + this.state.sensor._id;
@@ -35,8 +37,8 @@ export default class SensorScreen extends React.Component {
             .then(() => this.setState({selectedSubscribers: []}));
     }
 
-    _addNewSubscriber() {
-        console.log("TODO POST /sensors/id/subscribers");
+    _toNewSubscriberScreen() {
+        this.props.navigation.navigate('NewSubscriberScreen', {sensor: this.state.sensor, refresh: () => this._getSensor()});
     }
 
     _deleteSubscribers() {
@@ -89,7 +91,7 @@ export default class SensorScreen extends React.Component {
                     />
                 </View>
                 <SubscribersActionButtons 
-                    onAddNewSubscriber={this._addNewSubscriber.bind(this)}
+                    onAddNewSubscriber={this._toNewSubscriberScreen.bind(this)}
                     onDeleteSubscribers={this._deleteSubscribers.bind(this)}
                     state={this.state}
                 />

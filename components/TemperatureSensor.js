@@ -7,7 +7,6 @@ export default class Sensor extends React.Component {
     }
 
     _toSensorScreen() {
-        console.log("lets go");
         this.props.navigation.navigate('SensorScreen', {sensor: this.props.sensor});
     }
 

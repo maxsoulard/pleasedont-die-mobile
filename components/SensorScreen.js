@@ -26,7 +26,7 @@ export default class SensorScreen extends React.Component {
     } 
 
     _getSensor() {
-        const getUrl = 'http://192.168.0.17:8888/api/sensors/' + this.state.sensor._id;
+        const getUrl = 'http://home.maximesoulard.fr:8888/api/sensors/' + this.state.sensor._id;
         axios.get(getUrl)
             .then((response) => {
                 _.each(this.state.subscribers, (subscriber) => {
@@ -43,7 +43,7 @@ export default class SensorScreen extends React.Component {
 
     _deleteSubscribers() {
         _.each(this.state.selectedSubscribers, (subscriberToDelete) => {
-            const deleteUrl = 'http://192.168.0.17:8888/api/sensors/' + this.state.sensor._id + '/subscribers/' + subscriberToDelete.mail;
+            const deleteUrl = 'http://home.maximesoulard.fr:8888/api/sensors/' + this.state.sensor._id + '/subscribers/' + subscriberToDelete.mail;
             axios.delete(deleteUrl)
                 .then(this._getSensor.bind(this));
         });

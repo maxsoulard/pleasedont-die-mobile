@@ -18,7 +18,7 @@ export default class NewSubscriberScreen extends React.Component {
     }
 
     _postNewSubscriber() {
-        const postUrl = 'http://192.168.0.17:8888/api/sensors/' + this.state.sensor._id + '/subscribers';
+        const postUrl = 'http://home.maximesoulard.fr:8888/api/sensors/' + this.state.sensor._id + '/subscribers';
         const postBody = {
             "mail": this.state.mail
         }

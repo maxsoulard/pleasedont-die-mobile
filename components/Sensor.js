@@ -23,7 +23,7 @@ export default class Sensor extends React.Component {
     }
 
     getSensorData() {
-        axios.get('http://192.168.0.17:8888/api/sensors/'+ this.props.sensor._id +'/data')
+        axios.get('http://home.maximesoulard.fr:8888/api/sensors/'+ this.props.sensor._id +'/data')
             .then((response) => {
                 response.data.id = this.props.sensor._id;
                 this.setState({data: response.data});

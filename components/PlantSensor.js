@@ -20,6 +20,8 @@ export default class Sensor extends React.Component {
         if (this.props.data.moisture <= 500)         icon = <Text>💧</Text>
         else if (this.props.data.moisture <= 400)    icon = <Text>💧💧 ⚠️</Text>
         else if (this.props.data.moisture <= 300)    icon = <Text>💧💧💧 ☠️</Text>
+
+        let name = this.props.sensor.name ? this.props.sensor.name.toUpperCase() : 'PLANTE';
         
         return (
             <TouchableHighlight style={styles.touchablecontainer} onPress={this._toSensorScreen.bind(this)}>
@@ -28,7 +30,7 @@ export default class Sensor extends React.Component {
                     source={require('../assets/plant.png')}>
                     <View style={styles.container}>
                         <View style={styles.subcontainer}>
-                            <Text style={styles.title}>PLANTE</Text>
+                            <Text style={styles.title}>{name}</Text>
                         </View>
                         <View style={styles.iconcontainer}>{icon}</View>
                         <Text style={styles.data}>Last update : {this.props.data.date}</Text>

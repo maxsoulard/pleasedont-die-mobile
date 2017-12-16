@@ -61,8 +61,18 @@ export default class SensorScreen extends React.Component {
         this.setState({selectedSubscribers: selectedSubscribers});
     }
 
+    _save() {
+        this.state.name && this._setName();
+        this.state.warninglevel && this._setLevel();
+    }
+
     _setName() {
         axios.patch(`http://home.maximesoulard.fr:8888/api/sensors/${this.state.sensor._id}`, { name: this.state.name })
+            .then(() => this.props.navigation.state.params.refresh());
+    }
+
+    _setLevel() {
+        axios.patch(`http://home.maximesoulard.fr:8888/api/sensors/${this.state.sensor._id}`, { warninglevel: this.state.warninglevel })
             .then(() => this.props.navigation.state.params.refresh());
     }
 
@@ -82,22 +92,11 @@ export default class SensorScreen extends React.Component {
                         onChangeText={(name) => this.setState({name})}
                         />
                 </View>
-                {typeof this.state.name !== 'undefined' &&
                 <View style={styles.informationsContainer}>
-                    <Button
-                        onPress={() => this._setName()}
-                        title="Valider"
-                        color="#e0bc00"
-                        accessibilityLabel="Valider"
-                    />
-                </View>
-                }
-                <View style={styles.informationsContainer}>
-                    <Text style={styles.title}>Adresse MAC du capteur : </Text>
-                    <Text>{sensor._id}</Text>
+                    <Text style={styles.title}>NOTIFICATIONS</Text>
                 </View>
                 <View style={styles.informationsContainer}>
-                    <Text style={styles.title}>Abonnés aux notifications : </Text>
+                    <Text style={styles.subtitle}>Abonnés : </Text>
                 </View>
                 <View style={styles.subscribersList}>
                     <ListView
@@ -113,11 +112,30 @@ export default class SensorScreen extends React.Component {
                             </View>}
                     />
                 </View>
+                <View style={styles.informationsContainer}>
+                    <Text style={styles.subtitle}>Seuil d'alerte : </Text>
+                    <TextInput
+                        style={{height: 40}}
+                        placeholder='Warning level (200 to 800)'
+                        onChangeText={(warninglevel) => this.setState({warninglevel})}
+                        />
+                </View>
                 <SubscribersActionButtons 
                     onAddNewSubscriber={this._toNewSubscriberScreen.bind(this)}
                     onDeleteSubscribers={this._deleteSubscribers.bind(this)}
                     state={this.state}
                 />
+                
+                {typeof this.state.name !== 'undefined' &&
+                <View style={styles.informationsContainer}>
+                    <Button
+                        onPress={() => this._save()}
+                        title="Enregistrer"
+                        color="#e0bc00"
+                        accessibilityLabel="Enregistrer"
+                    />
+                </View>
+                }
             </View>
         );
     }
@@ -148,7 +166,7 @@ const SubscribersActionButtons = ({onAddNewSubscriber, onDeleteSubscribers, stat
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
+        flex: 1,
     },
     informationsContainer: {
         paddingTop: 5,
@@ -158,6 +176,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 28,
+    },
+    subtitle: {
+        fontSize: 16,
     },
     subscribersList: {
         backgroundColor: 'white',

@@ -20,6 +20,7 @@ export default class Sensor extends React.Component {
         if (this.props.data.moisture <= 500)         icon = <Text>💧</Text>
         else if (this.props.data.moisture <= 400)    icon = <Text>💧💧 ⚠️</Text>
         else if (this.props.data.moisture <= 300)    icon = <Text>💧💧💧 ☠️</Text>
+        else                                         icon = <Text>👌</Text>
 
         let name = this.props.sensor.name ? this.props.sensor.name.toUpperCase() : 'PLANTE';
         
@@ -34,7 +35,6 @@ export default class Sensor extends React.Component {
                         </View>
                         <View style={styles.iconcontainer}>{icon}</View>
                         <Text style={styles.data}>Last update : {this.props.data.date}</Text>
-                        <Text style={styles.data}>Valeur brute : {this.props.data.moisture}</Text>
                     </View>
                 </Image>
             </TouchableHighlight>
